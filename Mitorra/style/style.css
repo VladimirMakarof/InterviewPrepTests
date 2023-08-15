@@ -3,16 +3,18 @@
   --alpha-color: #8d1616;
   --beta-color: #ccc;
   --gamma-color: #f0f0f0;
+  --delta-color: #333;
+  --epsilon-color: #023162;
+  --zeta-color: #007bff;
 
   /* font */
-  --primary-color: #007bff;
-  --font-size: 16px;
+  --main-font: Arial, sans-serif;
 }
 
 /** общие */
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--main-font);
   padding: 0;
 }
 
@@ -43,8 +45,10 @@ h2 {
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid var(--beta-color);
-  background-color: #f9f9f9;
+  background-color: var(--gamma-color);
   border-radius: 8px;
+}
+.section_2 {
 }
 
 .link_github {
@@ -57,6 +61,10 @@ h2 {
 }
 .title_1 {
   margin: 0 10px;
+}
+.title_2 {
+  margin: 20px 10px;
+  font-size: 20px;
 }
 
 /** карусель */
@@ -86,7 +94,7 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
   padding: 10px;
-  background-color: #333;
+  background-color: var(--delta-color);
   color: white;
   border: none;
   cursor: pointer;
@@ -119,7 +127,7 @@ h2 {
 /** блоки */
 
 .card {
-  border: 1px solid #ccc;
+  border: 1px solid var(--beta-color);
   padding: 10px;
   margin: 10px;
   box-sizing: border-box;
@@ -148,10 +156,42 @@ h2 {
 
 /* Стили для карточек с заданной шириной */
 .card[data-width] {
-  width: calc(var(--card-width, 200px) - 20px);
+  /* width: calc(var(--card-width, 200px) - 20px); */
   display: inline-block;
 
   box-sizing: border-box;
+}
+.card.card_1,
+.card.card_2,
+.card.card_3,
+.card.card_4,
+.card.card_5 {
+  display: inline-block;
+  vertical-align: top;
+
+  position: relative;
+}
+.card_1 {
+  width: 150px;
+}
+.card_2 {
+  width: 300px;
+}
+.card_3 {
+  width: 250px;
+}
+.card_4 {
+  width: 200px;
+}
+.card_5 {
+  width: 150px;
+}
+.button_s2 {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  width: 80%;
 }
 
 /* Стили для заголовка карточки */
@@ -160,7 +200,7 @@ h2 {
   font-weight: bold;
   margin-bottom: 5px;
   text-align: center;
-  color: #023162;
+  color: var(--epsilon-color);
   position: relative;
   padding-bottom: 5px;
 }
@@ -170,7 +210,7 @@ h2 {
   display: block;
   width: 95%;
   height: 2px;
-  background-color: #aba9a9;
+  background-color: var(--delta-color);
   position: absolute;
   bottom: 0;
   left: 80%;
@@ -194,21 +234,21 @@ h2 {
   flex-direction: column;
 }
 .card__button {
-  border: solid 1px #007bff;
-  color: #0c0c0c;
+  border: solid 1px var(--zeta-color);
+  color: var(--delta-color);
   padding: 10px 10px;
   cursor: pointer;
   align-self: flex-end;
-  background-color: #ffffff;
+  background-color: var(--gamma-color);
   border-radius: 8px;
   text-align: center;
   margin-top: auto;
   margin: 0 auto;
-  width: 90%;
+  width: 80%;
 }
 .card__button:hover {
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: var(--zeta-color);
+  color: white;
 }
 
 @media (max-width: 800px) {
