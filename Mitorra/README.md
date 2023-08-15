@@ -32,7 +32,7 @@
 
 ## Деплой проекта
 
-Вы можете посмотреть работающий пример данной карусели [здесь](https://vladimirmakarof.github.io/InterviewPrepTests/Mitorra/index.html).
+Вы можете посмотреть работающий пример данной карусели, так же первого, второго задания [здесь](https://vladimirmakarof.github.io/InterviewPrepTests/Mitorra/index.html).
 
 Задания, связанные с PHP, находятся в папке `php`.
 
