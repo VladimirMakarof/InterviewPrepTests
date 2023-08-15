@@ -1,3 +1,36 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "1234";
+$dbname = "test";
+
+// Создание подключения
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Проверка подключения
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// Запрос на количество пользователей, привязанных к более чем одной компании
+$sqlUsersMultipleCompanies = "SELECT user.user_id, user.user_name, COUNT(company_user.company_id) AS company_count
+    FROM company_user
+    JOIN user ON company_user.user_id = user.user_id
+    GROUP BY user.user_id HAVING company_count > 1";
+
+
+$resultUsersMultipleCompanies = $conn->query($sqlUsersMultipleCompanies);
+
+// Запрос на компании, в которых состоят только пользователи, не привязанные к другим компаниям
+$sqlCompaniesSingleUser = "SELECT company.company_id, company.company_name
+    FROM company
+    WHERE company.company_id NOT IN (SELECT DISTINCT company_user.company_id FROM company_user WHERE company_user.user_id NOT IN (SELECT DISTINCT company_user.user_id FROM company_user WHERE company_user.company_id = company.company_id))";
+
+
+$resultCompaniesSingleUser = $conn->query($sqlCompaniesSingleUser);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +63,30 @@
 
   <button id="showSortedButton">Показать отсортированный массив</button>
   <div class="sorted-array"></div>
+
+  <!-- Разделитель -->
+  <div class="divider"></div>
+
+  <h2>Задание 5</h2>
+
+  <h2>Количество пользователей, привязанных больше, чем к одной компании:</h2>
+
+  <ul>
+    <?php
+    while ($row = $resultUsersMultipleCompanies->fetch_assoc()) {
+      echo "<li>User ID: " . $row["user_id"] . ", Username: " . $row["user_name"] . ", Company Count: " . $row["company_count"] . "</li>";
+    }
+    ?>
+  </ul>
+
+  <h2>Компании, в которых состоят только пользователи, не привязанные к другим компаниям:</h2>
+  <ul>
+    <?php
+    while ($row = $resultCompaniesSingleUser->fetch_assoc()) {
+      echo "<li>Company ID: " . $row["company_id"] . ", Company Name: " . $row["company_name"] . "</li>";
+    }
+    ?>
+  </ul>
 
   <style>
     #showSortedButton {
@@ -237,3 +294,8 @@
 </body>
 
 </html>
+
+<?php
+// Закрытие соединения с базой данных
+$conn->close();
+?>
