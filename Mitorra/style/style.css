@@ -36,6 +36,7 @@ h2 {
   text-align: center;
   background-color: var(--gamma-color);
   padding: 10px 0;
+  opacity: 0.7;
 }
 
 .task-container {
@@ -53,6 +54,9 @@ h2 {
 
 .link_github:hover {
   color: var(--alpha-color);
+}
+.title_1 {
+  margin: 0 10px;
 }
 
 /** карусель */
@@ -130,12 +134,12 @@ h2 {
   /* Автоматически заполняем на всю ширину grid-контейнера */
   grid-template-columns: repeat(auto-fill, 225px);
   width: 100%;
-  max-width: 1000px; /* Ширина grid-контейнера */
-  justify-content: center;
+  /*  max-width: 1200px; /* Ширина grid-контейнера */
+  /* justify-content: center; */
   justify-items: center; /* Размещаем карточку по центру */
-  column-gap: 30px; /* Отступ между колонками */
-  row-gap: 40px; /* Отступ между рядами */
-  margin: 0 auto;
+  column-gap: 40px; /* Отступ между колонками */
+  margin: 0 20px;
+  /* margin: 0 auto; */
 }
 
 .card_task1 {
