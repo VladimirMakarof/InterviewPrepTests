@@ -18,7 +18,7 @@
 
 1. Реализуйте данный макет используя только HTML и CSS.
    
-![Рисунок1](https://github.com/VladimirMakarof/InterviewPrepTests/blob/main/assets/10245800/6daa0b8f-4fcc-4873-b90c-26631f667ef8.png)
+![Рисунок1](https://github.com/VladimirMakarof/InterviewPrepTests/assets/10245800/6daa0b8f-4fcc-4873-b90c-26631f667ef8)
 
 Обратите внимание на то, что ширина карточки не зависит от экрана пользователя и если четыре штуки не входят в одну строку, то последняя переносится на новую строку.
 
