@@ -43,13 +43,12 @@ h2 {
 
 .task-container {
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid var(--beta-color);
   background-color: var(--gamma-color);
   border-radius: 8px;
 }
-.section_2 {
-}
+
 
 .link_github {
   text-decoration: none;
@@ -59,9 +58,7 @@ h2 {
 .link_github:hover {
   color: var(--alpha-color);
 }
-.title_1 {
-  margin: 0 10px;
-}
+
 .title_2 {
   margin: 20px 10px;
   font-size: 20px;
@@ -72,8 +69,9 @@ h2 {
 .carousel-container {
   position: relative;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
   overflow: hidden;
+  /* margin-bottom: 50px; */
 }
 
 .carousel {
@@ -139,26 +137,20 @@ h2 {
 }
 .cards {
   display: grid;
-  /* Автоматически заполняем на всю ширину grid-контейнера */
   grid-template-columns: repeat(auto-fill, 225px);
   width: 100%;
-  /*  max-width: 1200px; /* Ширина grid-контейнера */
-  /* justify-content: center; */
-  justify-items: center; /* Размещаем карточку по центру */
-  column-gap: 40px; /* Отступ между колонками */
-  margin: 0 20px;
-  /* margin: 0 auto; */
-}
-
-.card_task1 {
-  min-width: 250px; /* Задайте минимальную ширину карточек */
-}
-
-/* Стили для карточек с заданной шириной */
+  justify-items: center;
+  column-gap: 40px;
+  /*  margin: 0 20px;*/
+ }
+ 
+ .card_task1 {
+   min-width: 250px;
+ }
+ 
+ /* Стили для карточек с заданной шириной */
 .card[data-width] {
-  /* width: calc(var(--card-width, 200px) - 20px); */
   display: inline-block;
-
   box-sizing: border-box;
 }
 .card.card_1,
@@ -249,6 +241,18 @@ h2 {
 .card__button:hover {
   background-color: var(--zeta-color);
   color: white;
+}
+
+.task {
+  font-size: 1em;
+  color: #3498db;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f4f4f4;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  display: inline-block;
 }
 
 @media (max-width: 800px) {
