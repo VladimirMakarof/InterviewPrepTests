@@ -1,4 +1,4 @@
-export function initCarousel() {
+// export function initCarousel() {
   // Когда страница полностью загружена
   window.addEventListener('load', function () {
     // Получаем кнопки "Предыдущий" и "Следующий"
@@ -119,4 +119,4 @@ export function initCarousel() {
       }, 400);
     }
   });
-}
+// }
