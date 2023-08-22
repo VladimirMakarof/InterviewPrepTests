@@ -13,21 +13,37 @@ if ($conn->connect_error) {
 }
 
 // Запрос на количество пользователей, привязанных к более чем одной компании
-$sqlUsersMultipleCompanies = "SELECT user.user_id, user.user_name, COUNT(company_user.company_id) AS company_count
+$sqlUsersMultipleCompanies = "SELECT user.user_id, user.user_name, COUNT(DISTINCT company_user.company_id) AS company_count
     FROM company_user
     JOIN user ON company_user.user_id = user.user_id
-    GROUP BY user.user_id HAVING company_count > 1";
-
-
+    GROUP BY user.user_id
+    HAVING company_count > 1
+";
 $resultUsersMultipleCompanies = $conn->query($sqlUsersMultipleCompanies);
 
-// Запрос на компании, в которых состоят только пользователи, не привязанные к другим компаниям
-$sqlCompaniesSingleUser = "SELECT company.company_id, company.company_name
-    FROM company
-    WHERE company.company_id NOT IN (SELECT DISTINCT company_user.company_id FROM company_user WHERE company_user.user_id NOT IN (SELECT DISTINCT company_user.user_id FROM company_user WHERE company_user.company_id = company.company_id))";
 
+// Запрос на компании, в которых состоят только пользователи, не привязанные к другим компаниям
+// Выбираем ID и названия компаний, в которых состоят только пользователи, не привязанные к другим компаниям
+$sqlCompaniesSingleUser = "  SELECT c.company_id, c.company_name
+  FROM (
+    -- Создаем вспомогательную таблицу x, где для каждой компании подсчитываем количество пользователей, принадлежащих к ней
+    SELECT cu.company_id, COUNT(*) OVER (PARTITION BY cu.user_id) AS user_company_count
+    FROM company_user cu
+  ) x
+  -- Присоединяем таблицу company к вспомогательной таблице x по ID компании
+  JOIN company c ON x.company_id = c.company_id
+  -- Группируем результат по ID и названию компании
+  GROUP BY c.company_id, c.company_name
+  -- Оставляем только те компании, где максимальное количество пользователей в данной компании равно 1
+  HAVING MAX(user_company_count) = 1;
+";
 
 $resultCompaniesSingleUser = $conn->query($sqlCompaniesSingleUser);
+
+
+
+
+
 
 ?>
 
@@ -55,13 +71,13 @@ $resultCompaniesSingleUser = $conn->query($sqlCompaniesSingleUser);
     <li>Полученный текст автоматически вставляется в поле для текста, обеспечивая динамическое обновление контента.</li>
   </ul>
 
-<?php
-// Создаем массив с данными для карточки
-$cardTitle = '1 карточка';
-$cardButtonLabel = 'Нажать';
+  <?php
+  // Создаем массив с данными для карточки
+  $cardTitle = '1 карточка';
+  $cardButtonLabel = 'Нажать';
 
-// Генерируем HTML-код карточки с использованием данных
-$cardHTML = '
+  // Генерируем HTML-код карточки с использованием данных
+  $cardHTML = '
 <div class="card card_task1">
   <div class="card__content">
     <div class="card__title">' . $cardTitle . '</div>
@@ -71,9 +87,9 @@ $cardHTML = '
 </div>
 ';
 
-// Выводим сгенерированный HTML-код
-echo $cardHTML;
-?>
+  // Выводим сгенерированный HTML-код
+  echo $cardHTML;
+  ?>
 
 
   <!-- Разделитель -->
@@ -289,27 +305,26 @@ echo $cardHTML;
     //     xhr.send();
     //   });
     // });
-  document.addEventListener('DOMContentLoaded', function() {
-  const cardText = document.querySelector('.card__text');
-  const loadDataButton = document.querySelector('.card__button');
+    document.addEventListener('DOMContentLoaded', function() {
+      const cardText = document.querySelector('.card__text');
+      const loadDataButton = document.querySelector('.card__button');
 
-  loadDataButton.addEventListener('click', function() {
-    fetch('data.php') // Выполняем GET-запрос к файлу data.php
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Произошла ошибка');
-        }
-        return response.text(); // Преобразуем ответ в текст
-      })
-      .then(data => {
-        cardText.innerHTML = data; // Вставляем полученный текст в элемент
-      })
-      .catch(error => {
-        cardText.innerHTML = 'Произошла ошибка: ' + error.message;
+      loadDataButton.addEventListener('click', function() {
+        fetch('data.php') // Выполняем GET-запрос к файлу data.php
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Произошла ошибка');
+            }
+            return response.text(); // Преобразуем ответ в текст
+          })
+          .then(data => {
+            cardText.innerHTML = data; // Вставляем полученный текст в элемент
+          })
+          .catch(error => {
+            cardText.innerHTML = 'Произошла ошибка: ' + error.message;
+          });
       });
-  });
-});
-
+    });
   </script>
 
   <script>
