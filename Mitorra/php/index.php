@@ -55,13 +55,26 @@ $resultCompaniesSingleUser = $conn->query($sqlCompaniesSingleUser);
     <li>Полученный текст автоматически вставляется в поле для текста, обеспечивая динамическое обновление контента.</li>
   </ul>
 
-  <div class="card card_task1">
-    <div class="card__content">
-      <div class="card__title">1 карточка</div>
-      <div class="card__text"></div>
-    </div>
-    <div class="card__button">Нажать</div>
+<?php
+// Создаем массив с данными для карточки
+$cardTitle = '1 карточка';
+$cardButtonLabel = 'Нажать';
+
+// Генерируем HTML-код карточки с использованием данных
+$cardHTML = '
+<div class="card card_task1">
+  <div class="card__content">
+    <div class="card__title">' . $cardTitle . '</div>
+    <div class="card__text"></div>
   </div>
+  <div class="card__button">' . $cardButtonLabel . '</div>
+</div>
+';
+
+// Выводим сгенерированный HTML-код
+echo $cardHTML;
+?>
+
 
   <!-- Разделитель -->
   <div class="divider"></div>
@@ -245,37 +258,58 @@ $resultCompaniesSingleUser = $conn->query($sqlCompaniesSingleUser);
   </style>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Выбираем элементы, с которыми будем работать
-      const cardText = document.querySelector('.card__text'); // Элемент для вставки текста
-      const loadDataButton = document.querySelector('.card__button'); // Кнопка загрузки данных
+    // document.addEventListener('DOMContentLoaded', function() {
+    //   // Выбираем элементы, с которыми будем работать
+    //   const cardText = document.querySelector('.card__text'); // Элемент для вставки текста
+    //   const loadDataButton = document.querySelector('.card__button'); // Кнопка загрузки данных
 
-      // Добавляем обработчик события для кнопки "Нажать"
-      loadDataButton.addEventListener('click', function() {
-        // Создаем новый объект XMLHttpRequest
-        const xhr = new XMLHttpRequest();
+    //   // Добавляем обработчик события для кнопки "Нажать"
+    //   loadDataButton.addEventListener('click', function() {
+    //     // Создаем новый объект XMLHttpRequest
+    //     const xhr = new XMLHttpRequest();
 
-        // Конфигурируем запрос: GET-запрос на файл 'data.php'
-        xhr.open('GET', 'data.php', true);
+    //     // Конфигурируем запрос: GET-запрос на файл 'data.php'
+    //     xhr.open('GET', 'data.php', true);
 
-        // Устанавливаем обработчик для успешной загрузки данных
-        xhr.onload = function() {
-          if (xhr.status === 200) { // Если статус ответа 200 (OK)
-            cardText.innerHTML = xhr.responseText; // Вставляем полученный текст в элемент
-          } else {
-            cardText.innerHTML = 'Произошла ошибка'; // В случае ошибки выводим сообщение
-          }
-        };
+    //     // Устанавливаем обработчик для успешной загрузки данных
+    //     xhr.onload = function() {
+    //       if (xhr.status === 200) { // Если статус ответа 200 (OK)
+    //         cardText.innerHTML = xhr.responseText; // Вставляем полученный текст в элемент
+    //       } else {
+    //         cardText.innerHTML = 'Произошла ошибка'; // В случае ошибки выводим сообщение
+    //       }
+    //     };
 
-        // Устанавливаем обработчик для ошибки запроса
-        xhr.onerror = function() {
-          cardText.innerHTML = 'Произошла ошибка'; // В случае ошибки выводим сообщение
-        };
+    //     // Устанавливаем обработчик для ошибки запроса
+    //     xhr.onerror = function() {
+    //       cardText.innerHTML = 'Произошла ошибка'; // В случае ошибки выводим сообщение
+    //     };
 
-        // Отправляем GET-запрос на сервер
-        xhr.send();
+    //     // Отправляем GET-запрос на сервер
+    //     xhr.send();
+    //   });
+    // });
+  document.addEventListener('DOMContentLoaded', function() {
+  const cardText = document.querySelector('.card__text');
+  const loadDataButton = document.querySelector('.card__button');
+
+  loadDataButton.addEventListener('click', function() {
+    fetch('data.php') // Выполняем GET-запрос к файлу data.php
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Произошла ошибка');
+        }
+        return response.text(); // Преобразуем ответ в текст
+      })
+      .then(data => {
+        cardText.innerHTML = data; // Вставляем полученный текст в элемент
+      })
+      .catch(error => {
+        cardText.innerHTML = 'Произошла ошибка: ' + error.message;
       });
-    });
+  });
+});
+
   </script>
 
   <script>
